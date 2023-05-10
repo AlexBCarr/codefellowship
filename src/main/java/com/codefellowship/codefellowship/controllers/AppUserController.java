@@ -58,6 +58,7 @@ public class AppUserController {
         newUser.setLastName(lastName);
         newUser.setDateOfBirth(dateOfBirth);
         newUser.setBio(bio);
+        newUser.setDateCreated(LocalDate.now());
 
         appUserRepo.save(newUser);
         authWithHttpServletRequest(username, password);
@@ -71,6 +72,53 @@ public class AppUserController {
             System.out.println("Error While Logging In");
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/test")
+    public String getTestPage(Model m, Principal p) {
+        if(p != null) {
+            String username = p.getName();
+            AppUser user = appUserRepo.findByUsername(username);
+            if(user != null) {
+                m.addAttribute("username", user.getUsername());
+            }
+        }
+        return "test.html"
+    }
+
+    @GetMapping("/user/{id}")
+    public String getUserInfoPage(Model m, Principal p, @PathVariable long id) {
+        if (p != null) {
+            String username = p.getName();
+            AppUser browsing = appUserRepo.findByUsername(username);
+            m.addAttribute("username", browsingUser.getUsername());
+        }
+        AppUser profileUser = appUserRepo.findById(id).orElseThrow();
+        m.addAttribute("profileusername", profileUser.getUsername());
+        m.addAttribute("profileId", profileUser.getId());
+        m.addAttribute("profileDateCreated", profileUser.getDateCreated());
+        return "user-info.html";
+
+    }
+
+
+    @PutMapping("/user/{id}")
+    public RedirectView updateUserInfo(Model m, Principal p, @PathVariable Long id, String profileUsername,
+                                       RedirectAttributes redir) {
+        SiteUser userToBeEdited = siteUserRepository.findById(id).orElseThrow();
+        if(p != null && p.getName().equals(userToBeEdited.getUsername())) {
+            userToBeEdited.setUsername(profileUsername);
+            siteUserRepository.save(userToBeEdited);
+
+            // include lines below if your principal is not updating
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userToBeEdited, userToBeEdited.getPassword(),
+                    userToBeEdited.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            redir.addFlashAttribute("errorMessage", "Cannont edit another user's page!");
+        }
+
+        return new RedirectView("/user/"+id);
     }
 
 
