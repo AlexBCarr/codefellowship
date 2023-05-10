@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 th:if="${username != null}" th:text="${'Current browsing user: ' + username}"></h3>
+<h1 th:text="${'User info for user id: ' + profileId}"></h1>
+
+<label for="profileUsername">Username</label>
+<div th:text="${profileusername}" type="text" name="profileUsername" id="profileUsername"></div>
+<label for="profileId">Id</label>
+<div th:text="${profileId}" type="text" name="profileId" id="profileId"></div>
+<label for="profileDateCreated">Date Created</label>
+<div th:text="${#temporals.profileDateCreated, 'MM-dd-yyyy'}" type="text" name="profileDateCreated" id="profileDateCreated"></div>
+
+
+</body>
+</html>
