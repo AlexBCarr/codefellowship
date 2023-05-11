@@ -1,31 +1,33 @@
 package com.codefellowship.codefellowship.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
+    @Column(unique=true)
     private String username;
     private String password;
     private String firstName;
     private String lastName;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
     private String bio;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Post> posts;
+
+    // Constructors
     public AppUser() {}
 
-    public AppUser(String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
+    public AppUser(String username, String password, String firstName, String lastName, LocalDate dateOfBirth, String bio) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -34,6 +36,7 @@ public class AppUser implements UserDetails {
         this.bio = bio;
     }
 
+    // UserDetails Overrides
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -59,6 +62,22 @@ public class AppUser implements UserDetails {
         return true;
     }
 
+    // Methods
+    public void addPost(Post post) {
+        post.setAppUser(this);
+        posts.add(post);
+    }
+
+    // Getters and Setters
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
     public String getUsername() {
         return username;
     }
@@ -67,6 +86,7 @@ public class AppUser implements UserDetails {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -91,11 +111,11 @@ public class AppUser implements UserDetails {
         this.lastName = lastName;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -107,16 +127,11 @@ public class AppUser implements UserDetails {
         this.bio = bio;
     }
 
-    @Override
-    public String toString() {
-        return "AppUser{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", bio='" + bio + '\'' +
-                '}';
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>CodeFellowship</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CodeFellowship - Home</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Welcome to CodeFellowship</h1>
-<p>Connect with fellow code enthusiasts and share your journey.</p>
-
-<div th:if="${username}">
-    <p>Welcome, <span th:text="${username}"></span>!</p>
-    <a href="/logout">Logout</a>
-</div>
-
-<div th:unless="${username}">
-    <a href="/signup">Sign Up</a>
-    <a href="/login">Login</a>
-</div>
+<header>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+</header>
+<div th:replace="/fragments/error :: applicationUser-error"></div>
+<main>
+    <h1>Welcome to CodeFellowship!</h1>
+    <p>Connect with fellow code learners and support each other on your coding journey.</p>
+</main>
 </body>
 </html>
