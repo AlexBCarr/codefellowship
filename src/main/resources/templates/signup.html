@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Create a new account</h1>
-<form action="/signup" method="post">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required>
-  <br>
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required>
-  <br>
-  <label for="firstName">First Name:</label>
-  <input type="text" id="firstName" name="firstName" required>
-  <br>
-  <label for="lastName">Last Name:</label>
-  <input type="text" id="lastName" name="lastName" required>
-  <br>
-  <label for="dateOfBirth">Date of Birth:</label>
-  <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-  <br>
-  <label for="bio">Bio:</label>
+<header>
+  <nav th:replace="fragments/navbar :: navbar"></nav>
+</header>
+<div th:replace="/fragments/error :: applicationUser-error"></div>
+<h1>Sign up!</h1>
+<form method="post" action="/signup">
+  <label for="username">Username</label>
+  <input id="username" name="username" type="text" required>
+
+  <label for="password">Password</label>
+  <input id="password" name="password" type="password" required>
+
+  <label for="firstName">First Name</label>
+  <input id="firstName" name="firstName" type="text" required>
+
+  <label for="lastName">Last Name</label>
+  <input id="lastName" name="lastName" type="text" required>
+
+  <label for="dateOfBirth">Date of Birth</label>
+  <input id="dateOfBirth" name="dateOfBirth" type="date" required>
+
+  <label for="bio">Bio</label>
   <textarea id="bio" name="bio" required></textarea>
-  <br>
-  <input type="submit" value="Sign Up">
+
+  <input type="submit" value="Sign up">
 </form>
-<p>Already have an account? <a href="/login">Login</a></p>
 </body>
 </html>

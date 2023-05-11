@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
-<h3 th:if="${username}" th:text="${'Current user from fragment 1: ' + username}"></h3>
-<nav th:if="${username}" th:fragment="siteUser-header" th:text="'Current user from fragment 2: ' + ${username}"></nav>
-<ul th:fragment="list-frag">
-    <li>list item 1</li>
-    <li>list item 2</li>
-</ul>
+<div th:fragment="navbar">
+    <nav>
+        <a href="/">Home</a>
+        <span th:if="${username}">
+                | <span class="username">Welcome, <span th:text="${username}"></span></span>
+                | <a href="/myprofile">My Profile</a>
+                | <form action="/logout" method="post" style="display:inline;">
+                    <input type="submit" value="Logout">
+                </form>
+            </span>
+        <span th:unless="${username}">
+                | <a href="/login">Login</a>
+                | <a href="/signup">Sign up</a>
+            </span>
+    </nav>
+</div>
 </body>
 </html>
