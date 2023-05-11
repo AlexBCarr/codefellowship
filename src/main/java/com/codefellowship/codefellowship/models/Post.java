@@ -14,8 +14,8 @@ public class Post {
     Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "applicationUser_id")
-    ApplicationUser author;
+    @JoinColumn(name = "appUser_id")
+    AppUser author;
 
     public Post() {
         //empty
@@ -46,11 +46,11 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public ApplicationUser getApplicationUser() {
+    public AppUser getAppUser() {
         return author;
     }
 
-    public void setApplicationUser(ApplicationUser applicationUser) {
-        this.author = applicationUser;
+    public void setApplicationUser(AppUser appUser) {
+        this.author = appUser;
     }
 }

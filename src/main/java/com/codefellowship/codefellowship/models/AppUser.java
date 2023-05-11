@@ -64,7 +64,7 @@ public class AppUser implements UserDetails {
 
     // Methods
     public void addPost(Post post) {
-        post.setApplicationUser(this);
+        post.setAppUser(this);
         posts.add(post);
     }
 
